@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\kriteria;
 use DB;
 use Datatables;
 
@@ -19,10 +18,8 @@ class KriteriaController extends Controller
     	$data = DB::table('kriteria')
         ->leftjoin('sub_kriteria','kriteria.id','=','sub_kriteria.id_kriteria')
         ->select('kriteria.id', DB::raw('count(sub_kriteria.sub_kriteria) as jumlah'))
-        ->groupby('kriteria.id')
-        ->get();
+        ->groupby('kriteria.id');
 
-        // $data = DB::table('kriteria')->get();
         return Datatables::of($data)->make(true);
     }
 
