@@ -20,6 +20,8 @@ class KriteriaController extends Controller
         ->select('kriteria.id', DB::raw('count(sub_kriteria.sub_kriteria) as jumlah'))
         ->groupby('kriteria.id');
 
+        //sadafdasf
+
         return Datatables::of($data)->make(true);
     }
 
