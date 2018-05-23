@@ -8,6 +8,6 @@ class subkriteria extends Model
 {
 	protected $table = 'sub_kriteria';
     protected $fillable = [
-        'nama', 'id_kriteria',
+        'sub_kriteria', 'id_kriteria',
     ];
 }

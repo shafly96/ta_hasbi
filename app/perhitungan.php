@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class kriteria extends Model
+class perhitungan extends Model
 {
-	protected $table = 'kriteria';
+    protected $table = 'perhitungan';
     protected $fillable = [
-        'kriteria',
+        'nama'
     ];
 }

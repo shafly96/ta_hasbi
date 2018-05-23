@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Subkriteria extends Migration
+class Perhitungan extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class Subkriteria extends Migration
      */
     public function up()
     {
-        Schema::create('sub_kriteria', function (Blueprint $table) {
+        Schema::create('perhitungan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('sub_kriteria');
-            $table->unsignedInteger('id_kriteria');
+            $table->string('nama');
             $table->timestamps();
-
-            $table->foreign('id_kriteria')->references('id')->on('kriteria')->onDelete('cascade');
         });
-
     }
 
     /**
@@ -30,6 +26,6 @@ class Subkriteria extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_kriteria');
+        Schema::dropIfExists('perhitungan');
     }
 }

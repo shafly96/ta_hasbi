@@ -9,7 +9,6 @@
 	@yield('home')
 	<div class="container">
 		@yield('content')
-		@include('layouts.footer')
 	</div>
 	@stack('script')
 	<script src="{{url('')}}/assets/js/vendor/popper.min.js"></script>

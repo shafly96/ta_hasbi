@@ -8,47 +8,28 @@
 @section('content')
 <div class="row" style="margin-top: 50px">
   <div class="col-md-12">
-    <h1>Form Galangan</h1>
+    <h1>Form Kriteria</h1>
   </div>
 </div>
-<form>
+<form method="POST" action="{{url('')}}/kriteria/update/{{$data->id}}" enctype="multipart/form-data">
+  {!! csrf_field() !!}
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label>Nama Galangan</label>
-      <input type="text" class="form-control" placeholder="Nama Galangan" name="nama">
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <label>Logo</label>
-      <input type="file" class="form-control-file" name="logo">
+      <label>Nama Kriteria</label>
+      <input type="text" class="form-control" placeholder="Nama Kriteria" name="kriteria"  value="{{$data->kriteria}}">
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-5">
-      <label>Deskripsi</label>
-      <textarea class="form-control" rows="4"></textarea>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-4">
-      <label>Jenis Kapal</label>
-      <select class="form-control" name="jeniskapal">
-        <option>1</option>
-        <option>2</option>
-      </select>
-    </div>
-    <div class="form-group col-md-4">
-      <label>Jenis Ukuran</label>
-      <select class="form-control" name="jenisukuran">
-        <option>1</option>
-        <option>2</option>
-      </select>
+      <label>Sub-Kriteria</label>
+      <div id="tempat_tambah">
+      </div>
+      <button class="btn btn-sm btn-info" id="tombol_tambah" style="margin-top: 20px"><i class="fas fa-plus-circle"></i></button>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-5">
-      <a href="{{url('')}}/galangan/create" class="btn btn-primary" role="button" style="margin-top: 20px">Simpan</a>
+      <button class="btn btn-primary" type="submit" style="margin-top: 20px">Simpan</button>
     </div>
   </div>
 </form>
@@ -56,14 +37,36 @@
 
 @push('script')
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script>
-  $(document).ready(function() {
-    $('#example').DataTable({
-      "lengthChange": false,
-      "searching": false,
-      "iDisplayLength": 5
+  $(document).ready(function(){
+
+    var max_fields      = 10;
+    var wrapper         = $("#tempat_tambah");
+    var add_button      = $("#tombol_tambah");
+
+    var x = 0;
+
+    <?php
+    for($i=0; $i<count($data_sub); $i++){
+      ?>
+      $(wrapper).append('<div><input type="text" class="form-control" style="margin-top:10px" name="input[]" placeholder="Isi Kriteria " value="{{$data_sub[$i]->sub_kriteria}}"><button class="btn btn-sm btn-danger hapus" style="margin-top: 8px"><i class="fas fa-times"></i></button></div>');
+      x++;
+      <?php
+    }
+    ?>
+
+    $(add_button).click(function(e){
+      e.preventDefault();
+      if(x < max_fields){
+        $(wrapper).append('<div><input type="text" class="form-control" style="margin-top:10px" name="input[]" placeholder="Isi Kriteria "><button class="btn btn-sm btn-danger hapus" style="margin-top: 8px"><i class="fas fa-times"></i></button></div>');
+        x++;
+      }
+    });
+
+    $(wrapper).on("click",".hapus", function(e){
+      e.preventDefault(); 
+      x--;
+      $(this).parent('div').remove();
     });
   });
 </script>

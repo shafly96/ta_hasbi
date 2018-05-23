@@ -43,4 +43,11 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('edit/{id}', 'KriteriaController@edit');
 		Route::post('update/{id}', 'KriteriaController@update');
 	});
+
+	Route::group(['prefix' => 'perhitungan'], function(){
+		Route::get('/', 'PerhitunganController@index');
+		Route::get('data', 'PerhitunganController@data')->name('perhitungan.data');
+		Route::post('store', 'PerhitunganController@store');
+		Route::get('hapus/{id}', 'PerhitunganController@destroy');
+	});
 });

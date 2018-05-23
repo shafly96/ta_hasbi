@@ -3,7 +3,7 @@
 	<nav class="my-2 my-md-0 mr-md-3">
 		<a class="p-2 text-dark" href="{{url('')}}">Home</a>
 		@if(Auth::user())
-		<a class="p-2 text-dark" href="perhitungan.html">Perhitungan</a>
+		<a class="p-2 text-dark" href="{{url('')}}/perhitungan">Perhitungan</a>
 		<a class="p-2 text-dark" href="history.html">History</a>
 		@endif
 		@if(Auth::user() && Auth::user()->email == 'admin@gmail.com')
