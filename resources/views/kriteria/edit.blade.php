@@ -11,12 +11,12 @@
     <h1>Form Kriteria</h1>
   </div>
 </div>
-<form method="POST" action="{{url('')}}/kriteria/update/{{$data->id}}" enctype="multipart/form-data">
+<form method="POST" action="{{url('')}}/kriteria/update/{{$data_sub[0]->kriteria}}" enctype="multipart/form-data">
   {!! csrf_field() !!}
   <div class="form-row">
     <div class="form-group col-md-6">
       <label>Nama Kriteria</label>
-      <input type="text" class="form-control" placeholder="Nama Kriteria" name="kriteria"  value="{{$data->kriteria}}">
+      <input type="text" class="form-control" placeholder="Nama Kriteria" name="kriteria"  value="{{$data_sub[0]->kriteria}}">
     </div>
   </div>
   <div class="form-row">

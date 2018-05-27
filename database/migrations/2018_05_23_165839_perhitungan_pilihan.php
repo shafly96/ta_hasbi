@@ -12,7 +12,14 @@ class PerhitunganPilihan extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('perhitungan_pilihan', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('id_pilihan');
+            $table->unsignedInteger('id_perhitungan');
+            $table->timestamps();
+
+            $table->foreign('id_perhitungan')->references('id')->on('perhitungan')->onDelete('cascade');
+        });
     }
 
     /**
@@ -22,6 +29,6 @@ class PerhitunganPilihan extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('perhitungan_pilihan');
     }
 }

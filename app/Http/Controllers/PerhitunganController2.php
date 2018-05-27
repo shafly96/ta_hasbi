@@ -13,7 +13,7 @@ use App\kriteria;
 use Datatables;
 use DB;
 
-class PerhitunganController extends Controller
+class PerhitunganController2 extends Controller
 {
     public function index(){
     	$galangan = galangan::all();
@@ -42,32 +42,11 @@ class PerhitunganController extends Controller
         }
 
         for($i=0; $i<count($request->subkriteria); $i++){
-            if($i==0){
-                $cek = subkriteria::find(substr($request->subkriteria[$i],1,2));
-                $old = $cek;
-                $kriteria = new perhitungan_pilihan;
-                $kriteria->id_pilihan = 'K'.substr($request->subkriteria[$i],1,2);
-                $kriteria->id_perhitungan = $perhitungan->id;
-                $kriteria->save();
-
-            }else{
-                $cek = subkriteria::find(substr($request->subkriteria[$i],1,2));
-                if($old->kriteria!=$cek->kriteria){
-                    $kriteria = new perhitungan_pilihan;
-                    $kriteria->id_pilihan = 'K'.substr($request->subkriteria[$i],1,2);
-                    $kriteria->id_perhitungan = $perhitungan->id;
-                    $kriteria->save();
-                    $old=$cek;
-                }
-            }
-        }
-
-        for($i=0; $i<count($request->subkriteria); $i++){
-            $pilihan = new perhitungan_pilihan;
-            $pilihan->id_pilihan = $request->subkriteria[$i];
-            $pilihan->id_perhitungan = $perhitungan->id;
-            $pilihan->save();
-            $status = 'berhasil';
+        	$pilihan = new perhitungan_pilihan;
+        	$pilihan->id_pilihan = $request->subkriteria[$i];
+        	$pilihan->id_perhitungan = $perhitungan->id;
+        	$pilihan->save();
+        	$status = 'berhasil';
         }
 
         if($status == 'berhasil') return redirect('perhitungan')->with('success', 'Data berhasil disimpan');
@@ -92,15 +71,14 @@ class PerhitunganController extends Controller
     		if(substr($value->id_pilihan,0,1) == 'G'){
     			$cek = galangan::find(substr($value->id_pilihan,1,2));
     			$array[$key]['nama'] = $cek->nama;
-    		}else if(substr($value->id_pilihan,0,1) == 'S'){
+    		}else{
     			$cek = subkriteria::find(substr($value->id_pilihan,1,2));
     			$array[$key]['nama'] = $cek->sub_kriteria;
-    		}else{
-                $cek = subkriteria::find(substr($value->id_pilihan,1,2));
-                $array[$key]['nama'] = $cek->kriteria;
-            }
+    		}
     	}
 
-    	return view('perhitungan.perbandingan', compact('array'));
+        dd($array);
+
+    	return view('perhitungan.perbandingan');
     }
 }

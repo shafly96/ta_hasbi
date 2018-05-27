@@ -14,11 +14,9 @@ class Subkriteria extends Migration
     {
         Schema::create('sub_kriteria', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('kriteria');
             $table->string('sub_kriteria');
-            $table->unsignedInteger('id_kriteria');
             $table->timestamps();
-
-            $table->foreign('id_kriteria')->references('id')->on('kriteria')->onDelete('cascade');
         });
 
     }

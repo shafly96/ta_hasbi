@@ -17,7 +17,7 @@
   <div class="form-row">
     <div class="form-group col-md-12">
       <label>Logo</label>
-      <input type="file" class="form-control-file" name="logo" required>
+      <input type="file" class="form-control-file" name="logo">
     </div>
   </div>
   <div class="form-row">
@@ -26,7 +26,7 @@
       <textarea class="form-control" rows="4" name="deskripsi" required></textarea>
     </div>
   </div>
-  <div class="form-row">
+  <!-- <div class="form-row">
     <div class="form-group col-md-4">
       <label>Jenis Kapal</label>
       <select class="form-control" name="jenis_kapal">
@@ -41,7 +41,7 @@
         <option value="2">2</option>
       </select>
     </div>
-  </div>
+  </div> -->
   <div class="form-row">
     <div class="form-group col-md-5">
       <button class="btn btn-primary" type="submit" style="margin-top: 20px">Simpan</button>

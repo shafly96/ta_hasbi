@@ -54,7 +54,7 @@
     $('#example').DataTable({
       "lengthChange": false,
       "searching": false,
-      "iDisplayLength": 5,
+      "iDisplayLength": 10,
       destroy: true,
       responsive: true,
       processing: true,
@@ -67,7 +67,7 @@
         data: null, 
         searchable: false,
         render: function(data) {
-          return '<a href="{{url('')}}/kriteria/edit/'+data.id+'" class="btn btn-warning btn-sm" role="button"><i class="fas fa-edit"></i></a><a href="{{url('')}}/kriteria/hapus/'+data.id+'" class="btn btn-danger btn-sm" style="margin-left: 8px" role="button"><i class="fas fa-trash"></i></a>';
+          return '<a href="{{url('')}}/kriteria/edit/'+data.kriteria+'" class="btn btn-warning btn-sm" role="button"><i class="fas fa-edit"></i></a><a href="{{url('')}}/kriteria/hapus/'+data.kriteria+'" class="btn btn-danger btn-sm" style="margin-left: 8px" role="button"><i class="fas fa-trash"></i></a>';
         } 
       }
       ]

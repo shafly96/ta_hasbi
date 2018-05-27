@@ -32,12 +32,15 @@ class GalanganController extends Controller
     	$data->jenis_kapal = $request->jenis_kapal;
     	$data->jenis_ukuran = $request->jenis_ukuran;
 
-    	$image = $request->file('logo');
-        $filename  = date('m-d-Y_hia').'.'.$image->getClientOriginalExtension();
-        $path = public_path('\assets\img\gambar\img-'.$filename);
-        Image::make($image->getRealPath())->save($path);
+        if(!is_null($request->logo)){
+        	$image = $request->file('logo');
+            $filename  = date('m-d-Y_hia').'.'.$image->getClientOriginalExtension();
+            $path = public_path('\assets\img\gambar\img-'.$filename);
+            Image::make($image->getRealPath())->save($path);
 
-    	$data->logo = $filename;
+        	$data->logo = $filename;
+        }
+        
     	if($data->save()) return redirect('galangan')->with('success', 'Data berhasil disimpan');
     	else return redirect('galangan')->with('failed', 'Data gagal disimpan');
     }

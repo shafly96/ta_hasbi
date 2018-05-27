@@ -30,16 +30,12 @@
     <thead>
       <tr>
         <th>Nama</th>
-        <th>Jenis Kapal</th>
-        <th>Jenis Ukuran</th>
         <th>Aksi</th>
       </tr>
     </thead>
     <tfoot>
       <tr>
         <th>Nama</th>
-        <th>Jenis Kapal</th>
-        <th>Jenis Ukuran</th>
         <th>Aksi</th>
       </tr>
     </tfoot>
@@ -64,8 +60,6 @@
       ajax: '{!! route('galangan.data') !!}',
       columns: [
       { data: 'nama' },
-      { data: 'jenis_kapal' },
-      { data: 'jenis_ukuran' },
       { 
         data: null, 
         searchable: false,

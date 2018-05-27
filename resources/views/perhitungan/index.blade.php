@@ -3,6 +3,7 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('content')
@@ -52,11 +53,37 @@
         <form method="POST" action="{{url('')}}/perhitungan/store">
           {!! csrf_field() !!}
           <div class="form-row">
-            <div class="col-md-10">
+            <div class="form-group col-md-12">
+              <label>Nama Perhitungan</label>
               <input type="text" class="form-control" placeholder="Nama Perhitungan" name="nama">
             </div>
-            <div class="col-md-1">
-              <button class="btn btn-sm btn-primary" type="submit">Simpan</button>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Galangan</label>
+              <select class="js-example-basic-multiple" name="galangan[]" multiple="multiple" style="width:100% !important">
+                @foreach($galangan as $value1)
+                <option value="G{{$value1->id}}">{{$value1->nama}}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Sub Kriteria</label>
+              <select class="js-example-basic-multiple" name="subkriteria[]" multiple="multiple" style="width:90% !important">
+                @for($i=0; $i<count($subkriteria); $i++)
+                @if($i==0) <optgroup label="{{$subkriteria[$i]->kriteria}}"> @endif
+                @if($i>0 && $subkriteria[$i-1]->kriteria != $subkriteria[$i]->kriteria) <optgroup label="{{$subkriteria[$i]->kriteria}}"> @endif
+                <option value="S{{$subkriteria[$i]->id}}">{{$subkriteria[$i]->sub_kriteria}}</option>
+                @if($i<43 && $subkriteria[$i+1]->kriteria != $subkriteria[$i]->kriteria) </optgroup> @endif
+                @endfor
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <button class="btn btn-sm btn-primary" type="submit">Next</button>
             </div>
           </div>
         </form>
@@ -72,6 +99,7 @@
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>
   $(document).ready(function() {
     $('#example').DataTable({
@@ -90,12 +118,13 @@
         data: null, 
         searchable: false,
         render: function(data) {
-          return '<a href="{{url('')}}/perhitungan/edit/'+data.id+'" class="btn btn-warning btn-sm" role="button"><i class="fas fa-edit"></i></a><a href="{{url('')}}/perhitungan/hapus/'+data.id+'" class="btn btn-danger btn-sm" style="margin-left: 8px" role="button"><i class="fas fa-trash"></i></a>';
+          return '<a href="{{url('')}}/perhitungan/perbandingan/'+data.id+'" class="btn btn-warning btn-sm" role="button"><b>perbandingan</b></a><a href="{{url('')}}/perhitungan/hapus/'+data.id+'" class="btn btn-danger btn-sm" style="margin-left: 8px" role="button"><i class="fas fa-trash"></i></a>';
         } 
       }
       ]
     });
-  });
 
+    $('.js-example-basic-multiple').select2();
+  });
 </script>
 @endpush

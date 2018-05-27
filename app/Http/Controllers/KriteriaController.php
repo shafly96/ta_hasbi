@@ -17,12 +17,9 @@ class KriteriaController extends Controller
     }
 
     public function data(){
-    	$data = DB::table('kriteria')
-        ->leftjoin('sub_kriteria','kriteria.id','=','sub_kriteria.id_kriteria')
-        ->select('kriteria.id', 'kriteria.kriteria', DB::raw('count(sub_kriteria.sub_kriteria) as jumlah'))
-        ->groupby('kriteria.id');
-
-        //sadafdasf
+    	$data = DB::table('sub_kriteria')
+        ->select('kriteria', DB::raw('count(kriteria) as jumlah'))
+        ->groupby('kriteria');
 
         return Datatables::of($data)->make(true);
     }
@@ -32,13 +29,9 @@ class KriteriaController extends Controller
     }
 
     public function store(Request $request){
-        $data = new kriteria;
-        $data->kriteria = $request->kriteria;
-        $data->save();
-
         for($i=0; $i<count($request->input); $i++){
             $data_sub = new subkriteria;
-            $data_sub->id_kriteria = $data->id;
+            $data_sub->kriteria = $request->kriteria;
             $data_sub->sub_kriteria = $request->input[$i];
 
             if($data_sub->save()) $status = 'oke';
@@ -51,7 +44,7 @@ class KriteriaController extends Controller
 
     public function destroy($id)
     {
-        $data = kriteria::find($id);
+        $data = subkriteria::where('kriteria','=',$id);
 
         if($data->delete()) return redirect('kriteria')->with('success', 'Data berhasil dihapus');
         else return redirect('kriteria')->with('failed', 'Data gagal dihapus');
@@ -59,22 +52,17 @@ class KriteriaController extends Controller
 
     public function edit($id)
     {
-        $data = kriteria::find($id);
-        $data_sub = subkriteria::where('id_kriteria','=',$id)->get();
-        return view('kriteria.edit', compact('data','data_sub'));
+        $data_sub = subkriteria::where('kriteria','=',$id)->get();
+        return view('kriteria.edit', compact('data_sub'));
     }
 
     public function update(Request $request, $id){
-        $data = kriteria::find($id);
+        $data = subkriteria::where('kriteria','=',$id);
         $data->delete();
-
-        $data = new kriteria;
-        $data->kriteria = $request->kriteria;
-        $data->save();
 
         for($i=0; $i<count($request->input); $i++){
             $data_sub = new subkriteria;
-            $data_sub->id_kriteria = $data->id;
+            $data_sub->kriteria = $request->kriteria;
             $data_sub->sub_kriteria = $request->input[$i];
 
             if($data_sub->save()) $status = 'oke';
