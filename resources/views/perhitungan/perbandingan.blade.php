@@ -116,7 +116,7 @@
   $(document).ready(function(){
     $("#submit").click(function(){
       var node = $("#node").val();
-      var cluster = $("input[name=cluster]").val()
+      var cluster = $("input[name=cluster]:checked").val();
 
       var dataString = 'node='+ node + '&cluster='+ cluster;
       

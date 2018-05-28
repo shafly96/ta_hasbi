@@ -114,8 +114,6 @@ class PerhitunganController extends Controller
             $total+=$cek;
         }
 
-        dd($total);
-
-        return view('perhitungan.ajaxform', compact('data'));
+        return view('perhitungan.ajaxform', compact('data','total'));
     }
 }

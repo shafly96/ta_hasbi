@@ -23,6 +23,8 @@
     </tr>
   </thead>
   <tbody>
+    <?php $count = count($data) - 1; ?>
+    @for($i=0; $i<$total; $i++)
     <tr>
       <td>Galangan 1</td>
       <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-9"></td>
@@ -44,5 +46,6 @@
       <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="9"></td>
       <td>Galangan 2</td>
     </tr>
+    @endfor
   </tbody>
 </table>
