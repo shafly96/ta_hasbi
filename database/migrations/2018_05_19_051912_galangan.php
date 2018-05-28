@@ -15,10 +15,10 @@ class Galangan extends Migration
         Schema::create('galangan', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->longText('deskripsi');
-            $table->string('jenis_kapal');
-            $table->string('jenis_ukuran');
+            $table->string('jenis_kapal')->nullable();
+            $table->string('jenis_ukuran')->nullable();
             $table->timestamps();
         });
 

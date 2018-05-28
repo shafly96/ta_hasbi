@@ -17,18 +17,19 @@
     <h1>Perbandingan</h1>
   </div>
   <div class="col-md-12 border-bottom">
-    <form method="POST" action="{{url('')}}/perhitungan/tes">
+    <form>
       {!! csrf_field() !!}
       <div class="form-row">
         <div class="form-group col-md-5">
           <label>Node</label>
-          <select class="js-example-basic-multiple" name="node" style="width:100% !important" onchange="ubah(this.value)">
+          <select class="js-example-basic-multiple" id="node" name="node" style="width:100% !important" onchange="ubah(this.value)">
             <option value="goal">Goal</option>
               @for($i=0; $i<count($array); $i++)
-              @if($i==0) <optgroup label="<?php if(substr($array[$i]['id'],0,1)=='G') echo 'Galangan'; else if(substr($array[$i]['id'],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
-              @if($i>0 && substr($array[$i-1]['id'],0,1) != substr($array[$i]['id'],0,1)) <optgroup label="<?php if(substr($array[$i]['id'],0,1)=='G') echo 'Galangan'; else if(substr($array[$i]['id'],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
+              <?php $cek = explode('-', $array[$i]['id']); if($i>0) $cek2 = explode('-', $array[$i-1]['id']); if($i<count($array)-1) $cek3 = explode('-', $array[$i+1]['id']); ?>
+              @if($i==0) <optgroup label="<?php if(substr($cek[1],0,1)=='G') echo 'Galangan'; else if(substr($cek[1],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
+              @if($i>0 && substr($cek2[1],0,1) != substr($cek[1],0,1)) <optgroup label="<?php if(substr($cek[1],0,1)=='G') echo 'Galangan'; else if(substr($cek[1],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
               <option value="{{$array[$i]['id']}}">{{$array[$i]['nama']}}</option>
-              <?php if($i<count($array)-1 && substr($array[$i+1]['id'],0,1) != substr($array[$i]['id'],0,1)) echo '</optgroup>'; ?>
+              <?php if($i<count($array)-1 && substr($cek3[1],0,1) != substr($cek[1],0,1)) echo '</optgroup>'; ?>
               @endfor
           </select>
         </div>
@@ -39,11 +40,14 @@
           <label style="margin-right: 12px"><input id="cluster3" type="radio" name="cluster" value="S"> Sub-Kriteria</label>
         </div>
         <div class="form-group col-md-1">
-          <button class="btn btn-sm btn-primary" style="margin-top: 35px" type="submit">Pilih</button>
+          <button class="btn btn-sm btn-primary" style="margin-top: 35px" id="submit">Pilih</button>
         </div>
       </div>
     </form>
   </div>
+</div>
+<div class="row" id="isi_form">
+  
 </div>
 @endsection
 
@@ -66,6 +70,7 @@
 
   function ubah(id){
     var radios = document.getElementsByName('cluster');
+    var data = id.split('-');
 
     if(id=='goal'){
       radios[0].disabled = true;
@@ -74,20 +79,60 @@
       radios[2].disabled = true;
     }
 
-    if(id.substr(0,1)=='K' || id.substr(0,1)=='S'){
+    if(data[1].substr(0,1)=='K' || data[1].substr(0,1)=='S'){
       radios[0].disabled = false;
       radios[0].checked = true;
       radios[1].disabled = true;
       radios[2].disabled = true;
     }
 
-    if(id.substr(0,1)=='G'){
-      console.log('tes');
+    if(data[1].substr(0,1)=='G'){
       radios[0].disabled = true;
       radios[1].disabled = false;
       radios[1].checked = true;
       radios[2].disabled = false;
     }
   }
+
+  // function loadDoc() {
+  //   var xhttp = new XMLHttpRequest();
+  //   xhttp.onreadystatechange = function() {
+  //     if (this.readyState == 4 && this.status == 200) {
+  //       document.getElementById("isi_form").innerHTML = this.responseText;
+  //     }
+  //   };
+  //   xhttp.open("POST", "{{url('')}}/perhitungan/generateForm/{{$id}}", true);
+  //   xhttp.send();
+  // }
+</script>
+<script type="text/javascript">
+  $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $("#submit").click(function(){
+      var node = $("#node").val();
+      var cluster = $("input[name=cluster]").val()
+
+      var dataString = 'node='+ node + '&cluster='+ cluster;
+      
+      $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        type: "POST",
+        url: "{{url('')}}/perhitungan/generateForm/{{$id}}",
+        data: dataString,
+        cache: false,
+        success: function(result){
+          $("#isi_form").html(result);
+        }
+      });
+
+      return false;
+    });
+  });
 </script>
 @endpush

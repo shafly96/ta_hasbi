@@ -13,3 +13,4 @@
 
   <!-- Custom styles for this template -->
   <link href="{{url('')}}/dist/css/custom.css" rel="stylesheet">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />

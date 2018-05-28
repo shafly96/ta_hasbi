@@ -48,8 +48,8 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('/', 'PerhitunganController@index');
 		Route::get('data', 'PerhitunganController@data')->name('perhitungan.data');
 		Route::post('store', 'PerhitunganController@store');
-		Route::post('tes', 'PerhitunganController@tes');
 		Route::get('hapus/{id}', 'PerhitunganController@destroy');
 		Route::get('perbandingan/{id}', 'PerhitunganController@perbandingan');
+		Route::post('generateForm/{id}', 'PerhitunganController@generateForm');
 	});
 });

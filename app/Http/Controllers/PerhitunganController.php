@@ -87,7 +87,7 @@ class PerhitunganController extends Controller
     	$array = [];
 
     	foreach ($data as $key => $value) {
-    		$array[$key]['id'] = $value->id_pilihan;
+    		$array[$key]['id'] = $value->id.'-'.$value->id_pilihan;
 
     		if(substr($value->id_pilihan,0,1) == 'G'){
     			$cek = galangan::find(substr($value->id_pilihan,1,2));
@@ -101,10 +101,21 @@ class PerhitunganController extends Controller
             }
     	}
 
-    	return view('perhitungan.perbandingan', compact('array'));
+    	return view('perhitungan.perbandingan', compact('array','id'));
     }
 
-    public function tes(Request $request){
-        dd($request);
+    public function generateForm(Request $request, $id){
+        $data = perhitungan_pilihan::where('id_perhitungan','=',$id)->where('id_pilihan','like',$request->cluster.'%')->get();
+
+        $total = 0;
+
+        for($i=count($data); $i>0; $i--){
+            $cek = $i-1;
+            $total+=$cek;
+        }
+
+        dd($total);
+
+        return view('perhitungan.ajaxform', compact('data'));
     }
 }
