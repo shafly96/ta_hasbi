@@ -103,4 +103,8 @@ class PerhitunganController extends Controller
 
     	return view('perhitungan.perbandingan', compact('array'));
     }
+
+    public function tes(Request $request){
+        dd($request);
+    }
 }

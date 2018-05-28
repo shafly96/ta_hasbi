@@ -17,12 +17,12 @@
     <h1>Perbandingan</h1>
   </div>
   <div class="col-md-12 border-bottom">
-    <form method="POST" action="{{url('')}}/perhitungan/store">
+    <form method="POST" action="{{url('')}}/perhitungan/tes">
       {!! csrf_field() !!}
       <div class="form-row">
         <div class="form-group col-md-5">
           <label>Node</label>
-          <select class="js-example-basic-multiple" name="galangan[]" style="width:100% !important" onchange="ubah(this.value)">
+          <select class="js-example-basic-multiple" name="node" style="width:100% !important" onchange="ubah(this.value)">
             <option value="goal">Goal</option>
               @for($i=0; $i<count($array); $i++)
               @if($i==0) <optgroup label="<?php if(substr($array[$i]['id'],0,1)=='G') echo 'Galangan'; else if(substr($array[$i]['id'],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
@@ -32,13 +32,11 @@
               @endfor
           </select>
         </div>
-        <div class="form-group col-md-2">
-          <label>Cluster</label>
-          <select class="js-example-basic-multiple" name="galangan[]" style="width:100% !important; padding: 20px">
-            <option id="galangan" value="G">Galangan</option>
-            <option id="kriteria" value="K">Kriteria</option>
-            <option id="subkrteria" value="S">Sub-Kriteria</option>
-          </select>
+        <div class="form-group" style="margin-left: 10px">
+          <label>Cluster</label><br>
+          <label style="margin-right: 8px"><input id="cluster1" type="radio" name="cluster" value="G"> Galangan</label>
+          <label style="margin-right: 8px"><input id="cluster2" type="radio" name="cluster" value="K"> Kriteria</label>
+          <label style="margin-right: 12px"><input id="cluster3" type="radio" name="cluster" value="S"> Sub-Kriteria</label>
         </div>
         <div class="form-group col-md-1">
           <button class="btn btn-sm btn-primary" style="margin-top: 35px" type="submit">Pilih</button>
@@ -58,11 +56,37 @@
   });
 </script>
 <script>
+  window.onload=function(){
+    var radios = document.getElementsByName('cluster');
+
+    radios[0].disabled = true
+    radios[1].checked = true;
+    radios[2].disabled = true
+  }
 
   function ubah(id){
-    if(id == 'G1'){
-      document.getElementById('galangan').style.display = 'none';
-      document.getElementById('subkrteria').style.display = 'none';
+    var radios = document.getElementsByName('cluster');
+
+    if(id=='goal'){
+      radios[0].disabled = true;
+      radios[1].disabled = false;
+      radios[1].checked = true;
+      radios[2].disabled = true;
+    }
+
+    if(id.substr(0,1)=='K' || id.substr(0,1)=='S'){
+      radios[0].disabled = false;
+      radios[0].checked = true;
+      radios[1].disabled = true;
+      radios[2].disabled = true;
+    }
+
+    if(id.substr(0,1)=='G'){
+      console.log('tes');
+      radios[0].disabled = true;
+      radios[1].disabled = false;
+      radios[1].checked = true;
+      radios[2].disabled = false;
     }
   }
 </script>
