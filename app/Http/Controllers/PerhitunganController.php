@@ -106,6 +106,22 @@ class PerhitunganController extends Controller
 
     public function generateForm(Request $request, $id){
         $data = perhitungan_pilihan::where('id_perhitungan','=',$id)->where('id_pilihan','like',$request->cluster.'%')->get();
+        $array = [];
+
+        foreach ($data as $key => $value) {
+            $array[$key]['id'] = $value->id.'-'.$value->id_pilihan;
+
+            if(substr($value->id_pilihan,0,1) == 'G'){
+                $cek = galangan::find(substr($value->id_pilihan,1,2));
+                $array[$key]['nama'] = $cek->nama;
+            }else if(substr($value->id_pilihan,0,1) == 'S'){
+                $cek = subkriteria::find(substr($value->id_pilihan,1,2));
+                $array[$key]['nama'] = $cek->sub_kriteria;
+            }else{
+                $cek = subkriteria::find(substr($value->id_pilihan,1,2));
+                $array[$key]['nama'] = $cek->kriteria;
+            }
+        }
 
         $total = 0;
 
@@ -114,6 +130,6 @@ class PerhitunganController extends Controller
             $total+=$cek;
         }
 
-        return view('perhitungan.ajaxform', compact('data','total'));
+        return view('perhitungan.ajaxform', compact('array','total'));
     }
 }

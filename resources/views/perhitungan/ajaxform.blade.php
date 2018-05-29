@@ -23,11 +23,18 @@
     </tr>
   </thead>
   <tbody>
-    <?php $count = count($data) - 1; ?>
+    <?php 
+      $batas = count($array) - 1;
+      $batas2 = count($array);
+      $index = 0;
+      $counter = 0;
+      $index2 = 1;
+      $counter2 = 1;
+    ?>
     @for($i=0; $i<$total; $i++)
     <tr>
-      <td>Galangan 1</td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-9"></td>
+    <td><?php if($counter<$batas-1) { echo $array[$index]['nama']; $counter++; } else { echo $array[$index]['nama']; $counter = 0; $index++; $batas--; } ?></td>
+      <td style="text-align: center;"><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-9"></td>
       <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-8"></td>
       <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-7"></td>
       <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-6"></td>
@@ -44,7 +51,7 @@
       <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="7"></td>
       <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="8"></td>
       <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="9"></td>
-      <td>Galangan 2</td>
+      <td><?php if($counter2<$batas2) { echo $array[$counter2]['nama']; $counter2++; } else { $index2++; $counter2 = $index2; echo $array[$counter2]['nama']; $counter2++; } ?></td>
     </tr>
     @endfor
   </tbody>

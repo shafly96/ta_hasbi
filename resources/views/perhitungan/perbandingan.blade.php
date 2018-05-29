@@ -8,6 +8,8 @@
   .select2-container .select2-selection--single{
     height: 36px !important;
   }
+
+  .tengah { position:relative; margin:0 auto }
 </style>
 @endsection
 
@@ -46,7 +48,7 @@
     </form>
   </div>
 </div>
-<div class="row" id="isi_form">
+<div class="row" id="isi_form" style="margin-bottom: 50px;">
   
 </div>
 @endsection
