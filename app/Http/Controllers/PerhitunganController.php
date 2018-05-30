@@ -110,6 +110,7 @@ class PerhitunganController extends Controller
         $tes = perhitungan_perbandingan::where('id_perhitungan','=',$id)->where('id_pilihan','=',$request->node)->where('cluster','=',$request->cluster)->get();
 
         $array = [];
+        $array2 = [];
 
         if(count($tes)==0){
             foreach ($data as $key => $value) {
@@ -134,12 +135,15 @@ class PerhitunganController extends Controller
                 if(substr($value->id_pilihan,0,1) == 'G'){
                     $cek = galangan::find(substr($value->id_pilihan,1,2));
                     $array[$key]['nama'] = $cek->nama;
+                    $array2[$key]['nama'] = $cek->nama;
                 }else if(substr($value->id_pilihan,0,1) == 'S'){
                     $cek = subkriteria::find(substr($value->id_pilihan,1,2));
                     $array[$key]['nama'] = $cek->sub_kriteria;
+                    $array2[$key]['nama'] = $cek->sub_kriteria;
                 }else{
                     $cek = subkriteria::find(substr($value->id_pilihan,1,2));
                     $array[$key]['nama'] = $cek->kriteria;
+                    $array2[$key]['nama'] = $cek->kriteria;
                 }
             }
         }
@@ -166,6 +170,8 @@ class PerhitunganController extends Controller
             $data->id_pilihan = $request->node;
             $data->cluster = $request->cluster;
             $data->value = $request->value[$i];
+            $data->kiri = $request->kiri[$i];
+            $data->kanan = $request->kanan[$i];
             $data->save();
         }
 
