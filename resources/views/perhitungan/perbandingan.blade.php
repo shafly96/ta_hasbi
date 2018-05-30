@@ -14,43 +14,43 @@
 @endsection
 
 @section('content')
-<div class="row" style="margin-top: 50px">
-  <div class="col-md-12">
-    <h1>Perbandingan</h1>
+<form method="POST" action="{{url('')}}/perhitungan/simpan/{{$id}}">
+  <div class="row" style="margin-top: 50px">
+    <div class="col-md-12">
+      <h1>Perbandingan</h1>
+    </div>
+    <div class="col-md-12 border-bottom">
+        {!! csrf_field() !!}
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <label>Node</label>
+            <select class="js-example-basic-multiple" id="node" name="node" style="width:100% !important" onchange="ubah(this.value)">
+              <option value="goal">Goal</option>
+                @for($i=0; $i<count($array); $i++)
+                <?php $cek = explode('-', $array[$i]['id']); if($i>0) $cek2 = explode('-', $array[$i-1]['id']); if($i<count($array)-1) $cek3 = explode('-', $array[$i+1]['id']); ?>
+                @if($i==0) <optgroup label="<?php if(substr($cek[1],0,1)=='G') echo 'Galangan'; else if(substr($cek[1],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
+                @if($i>0 && substr($cek2[1],0,1) != substr($cek[1],0,1)) <optgroup label="<?php if(substr($cek[1],0,1)=='G') echo 'Galangan'; else if(substr($cek[1],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
+                <option value="{{$array[$i]['id']}}">{{$array[$i]['nama']}}</option>
+                <?php if($i<count($array)-1 && substr($cek3[1],0,1) != substr($cek[1],0,1)) echo '</optgroup>'; ?>
+                @endfor
+            </select>
+          </div>
+          <div class="form-group" style="margin-left: 10px">
+            <label>Cluster</label><br>
+            <label style="margin-right: 8px"><input id="cluster1" type="radio" name="cluster" value="G"> Galangan</label>
+            <label style="margin-right: 8px"><input id="cluster2" type="radio" name="cluster" value="K"> Kriteria</label>
+            <label style="margin-right: 12px"><input id="cluster3" type="radio" name="cluster" value="S"> Sub-Kriteria</label>
+          </div>
+          <div class="form-group col-md-1">
+            <button class="btn btn-sm btn-primary" style="margin-top: 35px" id="submit">Pilih</button>
+          </div>
+        </div>
+    </div>
   </div>
-  <div class="col-md-12 border-bottom">
-    <form>
-      {!! csrf_field() !!}
-      <div class="form-row">
-        <div class="form-group col-md-5">
-          <label>Node</label>
-          <select class="js-example-basic-multiple" id="node" name="node" style="width:100% !important" onchange="ubah(this.value)">
-            <option value="goal">Goal</option>
-              @for($i=0; $i<count($array); $i++)
-              <?php $cek = explode('-', $array[$i]['id']); if($i>0) $cek2 = explode('-', $array[$i-1]['id']); if($i<count($array)-1) $cek3 = explode('-', $array[$i+1]['id']); ?>
-              @if($i==0) <optgroup label="<?php if(substr($cek[1],0,1)=='G') echo 'Galangan'; else if(substr($cek[1],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
-              @if($i>0 && substr($cek2[1],0,1) != substr($cek[1],0,1)) <optgroup label="<?php if(substr($cek[1],0,1)=='G') echo 'Galangan'; else if(substr($cek[1],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
-              <option value="{{$array[$i]['id']}}">{{$array[$i]['nama']}}</option>
-              <?php if($i<count($array)-1 && substr($cek3[1],0,1) != substr($cek[1],0,1)) echo '</optgroup>'; ?>
-              @endfor
-          </select>
-        </div>
-        <div class="form-group" style="margin-left: 10px">
-          <label>Cluster</label><br>
-          <label style="margin-right: 8px"><input id="cluster1" type="radio" name="cluster" value="G"> Galangan</label>
-          <label style="margin-right: 8px"><input id="cluster2" type="radio" name="cluster" value="K"> Kriteria</label>
-          <label style="margin-right: 12px"><input id="cluster3" type="radio" name="cluster" value="S"> Sub-Kriteria</label>
-        </div>
-        <div class="form-group col-md-1">
-          <button class="btn btn-sm btn-primary" style="margin-top: 35px" id="submit">Pilih</button>
-        </div>
-      </div>
-    </form>
+  <div class="row" id="isi_form" style="margin-bottom: 50px;">
+    
   </div>
-</div>
-<div class="row" id="isi_form" style="margin-bottom: 50px;">
-  
-</div>
+</form>
 @endsection
 
 @push('script')

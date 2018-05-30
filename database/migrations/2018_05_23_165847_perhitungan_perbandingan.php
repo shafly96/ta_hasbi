@@ -14,12 +14,15 @@ class PerhitunganPerbandingan extends Migration
     {
         Schema::create('perhitungan_perbandingan', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_pilihan');
+            $table->unsignedInteger('id_perhitungan');
+            $table->string('id_pilihan');
             $table->string('cluster');
-            $table->integer('value');
+            $table->string('kiri');
+            $table->string('kanan');
+            $table->string('value');
             $table->timestamps();
-
-            $table->foreign('id_pilihan')->references('id')->on('perhitungan_pilihan')->onDelete('cascade');
+            
+            $table->foreign('id_perhitungan')->references('id')->on('perhitungan')->onDelete('cascade');
         });
     }
 

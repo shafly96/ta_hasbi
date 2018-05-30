@@ -24,35 +24,62 @@
   </thead>
   <tbody>
     <?php 
-      $batas = count($array) - 1;
-      $batas2 = count($array);
-      $index = 0;
-      $counter = 0;
-      $index2 = 1;
-      $counter2 = 1;
+    $batas = count($array) - 1;
+    $batas2 = count($array);
+    $index = 0;
+    $counter = 0;
+    $index2 = 1;
+    $counter2 = 1;
     ?>
     @for($i=0; $i<$total; $i++)
     <tr>
-    <td><?php if($counter<$batas-1) { echo $array[$index]['nama']; $counter++; } else { echo $array[$index]['nama']; $counter = 0; $index++; $batas--; } ?></td>
-      <td style="text-align: center;"><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-9"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-8"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-7"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-6"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-5"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-4"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-3"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="-2"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="1"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="2"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="3"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="4"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="5"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="6"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="7"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="8"></td>
-      <td><input class="form-check-input tengah" type="radio" name="exampleRadios" value="9"></td>
-      <td><?php if($counter2<$batas2) { echo $array[$counter2]['nama']; $counter2++; } else { $index2++; $counter2 = $index2; echo $array[$counter2]['nama']; $counter2++; } ?></td>
+      <td><?php if($counter<$batas-1) { echo $array[$index]['nama']; echo '<input type="hidden" name="kiri['.$i.']" value="'.$array[$index]['id'].'">'; $counter++; } else { echo $array[$index]['nama'];  echo '<input type="hidden" name="kiri['.$i.']" value="'.$array[$index]['id'].'">'; $counter = 0; $index++; $batas--; } ?></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.11" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.11') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.125" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.125') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.14" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.14') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.17" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.17') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.20" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.20') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.25" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.25') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.33" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.33') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.50" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.50') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="1" @if(isset($array[$i]['value']) && $array[$i]['value']=='1') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="2" @if(isset($array[$i]['value']) && $array[$i]['value']=='2') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="3" @if(isset($array[$i]['value']) && $array[$i]['value']=='3') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="4" @if(isset($array[$i]['value']) && $array[$i]['value']=='4') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="5" @if(isset($array[$i]['value']) && $array[$i]['value']=='5') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="6" @if(isset($array[$i]['value']) && $array[$i]['value']=='6') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="7" @if(isset($array[$i]['value']) && $array[$i]['value']=='7') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="8" @if(isset($array[$i]['value']) && $array[$i]['value']=='8') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="9" @if(isset($array[$i]['value']) && $array[$i]['value']=='9') checked @endif></td>
+      <td><?php if($counter2<$batas2) { echo $array[$counter2]['nama']; echo '<input type="hidden" name="kanan['.$i.']" value="'.$array[$counter2]['id'].'">'; $counter2++; } else { $index2++; $counter2 = $index2; echo $array[$counter2]['nama']; echo '<input type="hidden" name="kanan['.$i.']" value="'.$array[$counter2]['id'].'">'; $counter2++; } ?></td>
     </tr>
     @endfor
   </tbody>
 </table>
+
+<div class="form-row">
+  <div class="form-group col-md-5">
+    <button class="btn btn-primary" type="submit" style="margin-top: 20px">Simpan</button>
+  </div>
+</div>
+
+@if(isset($array[0]['value']))
+<div class="col-md-12 border-bottom">
+  <table class="table table-striped" style="text-align:center">
+    <thead>
+      <tr>
+        <td>Nama</td>
+        <td>Eigen</td>
+      </tr>
+    </thead>
+    <tbody>
+      @for($i=0; $i<count($array); $i++)
+      <tr>
+        <td>{{$array[$i]['nama']}}</td>
+        <td>Eigen</td>
+      </tr>
+      @endfor
+    </tbody>
+  </table>
+</div>
+@endif

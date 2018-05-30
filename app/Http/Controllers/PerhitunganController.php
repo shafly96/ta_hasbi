@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\perhitungan;
 use App\perhitungan_pilihan;
+use App\perhitungan_perbandingan;
 use App\galangan;
 use App\subkriteria;
 use App\kriteria;
@@ -106,20 +107,40 @@ class PerhitunganController extends Controller
 
     public function generateForm(Request $request, $id){
         $data = perhitungan_pilihan::where('id_perhitungan','=',$id)->where('id_pilihan','like',$request->cluster.'%')->get();
+        $tes = perhitungan_perbandingan::where('id_perhitungan','=',$id)->where('id_pilihan','=',$request->node)->where('cluster','=',$request->cluster)->get();
+
         $array = [];
 
-        foreach ($data as $key => $value) {
-            $array[$key]['id'] = $value->id.'-'.$value->id_pilihan;
+        if(count($tes)==0){
+            foreach ($data as $key => $value) {
+                $array[$key]['id'] = $value->id.'-'.$value->id_pilihan;
 
-            if(substr($value->id_pilihan,0,1) == 'G'){
-                $cek = galangan::find(substr($value->id_pilihan,1,2));
-                $array[$key]['nama'] = $cek->nama;
-            }else if(substr($value->id_pilihan,0,1) == 'S'){
-                $cek = subkriteria::find(substr($value->id_pilihan,1,2));
-                $array[$key]['nama'] = $cek->sub_kriteria;
-            }else{
-                $cek = subkriteria::find(substr($value->id_pilihan,1,2));
-                $array[$key]['nama'] = $cek->kriteria;
+                if(substr($value->id_pilihan,0,1) == 'G'){
+                    $cek = galangan::find(substr($value->id_pilihan,1,2));
+                    $array[$key]['nama'] = $cek->nama;
+                }else if(substr($value->id_pilihan,0,1) == 'S'){
+                    $cek = subkriteria::find(substr($value->id_pilihan,1,2));
+                    $array[$key]['nama'] = $cek->sub_kriteria;
+                }else{
+                    $cek = subkriteria::find(substr($value->id_pilihan,1,2));
+                    $array[$key]['nama'] = $cek->kriteria;
+                }
+            }
+        }else{
+            foreach ($data as $key => $value) {
+                $array[$key]['id'] = $value->id.'-'.$value->id_pilihan;
+                if(isset($tes[$key]->value)) $array[$key]['value'] = $tes[$key]->value;
+
+                if(substr($value->id_pilihan,0,1) == 'G'){
+                    $cek = galangan::find(substr($value->id_pilihan,1,2));
+                    $array[$key]['nama'] = $cek->nama;
+                }else if(substr($value->id_pilihan,0,1) == 'S'){
+                    $cek = subkriteria::find(substr($value->id_pilihan,1,2));
+                    $array[$key]['nama'] = $cek->sub_kriteria;
+                }else{
+                    $cek = subkriteria::find(substr($value->id_pilihan,1,2));
+                    $array[$key]['nama'] = $cek->kriteria;
+                }
             }
         }
 
@@ -131,5 +152,23 @@ class PerhitunganController extends Controller
         }
 
         return view('perhitungan.ajaxform', compact('array','total'));
+    }
+
+    public function simpan(Request $request, $id){
+        $tes = perhitungan_perbandingan::where('id_perhitungan','=',$id)->where('id_pilihan','=',$request->node)->where('cluster','=',$request->cluster)->get();
+
+        if(count($tes)>0) $tes = perhitungan_perbandingan::where('id_perhitungan','=',$id)->where('id_pilihan','=',$request->node)->where('cluster','=',$request->cluster)->delete();
+
+
+        for($i=0; $i<count($request->value); $i++){
+            $data = new perhitungan_perbandingan;
+            $data->id_perhitungan = $id;
+            $data->id_pilihan = $request->node;
+            $data->cluster = $request->cluster;
+            $data->value = $request->value[$i];
+            $data->save();
+        }
+
+        return redirect()->to('perhitungan/perbandingan/'.$id);
     }
 }

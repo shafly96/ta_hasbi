@@ -51,5 +51,6 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('hapus/{id}', 'PerhitunganController@destroy');
 		Route::get('perbandingan/{id}', 'PerhitunganController@perbandingan');
 		Route::post('generateForm/{id}', 'PerhitunganController@generateForm');
+		Route::post('simpan/{id}', 'PerhitunganController@simpan');
 	});
 });
