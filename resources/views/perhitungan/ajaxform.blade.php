@@ -34,14 +34,14 @@
     @for($i=0; $i<$total; $i++)
     <tr>
       <td><?php if($counter<$batas-1) { echo $array[$index]['nama']; echo '<input type="hidden" name="kiri['.$i.']" value="'.$array[$index]['id'].'">'; $counter++; } else { echo $array[$index]['nama'];  echo '<input type="hidden" name="kiri['.$i.']" value="'.$array[$index]['id'].'">'; $counter = 0; $index++; $batas--; } ?></td>
-      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.11" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.11') checked @endif></td>
-      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.125" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.125') checked @endif></td>
-      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.14" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.14') checked @endif></td>
-      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.17" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.17') checked @endif></td>
-      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.20" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.20') checked @endif></td>
-      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.25" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.25') checked @endif></td>
-      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.33" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.33') checked @endif></td>
-      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="0.50" @if(isset($array[$i]['value']) && $array[$i]['value']=='0.50') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="-9" @if(isset($array[$i]['value']) && $array[$i]['value']=='-9') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="-8" @if(isset($array[$i]['value']) && $array[$i]['value']=='-8') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="-7" @if(isset($array[$i]['value']) && $array[$i]['value']=='-7') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="-6" @if(isset($array[$i]['value']) && $array[$i]['value']=='-6') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="-5" @if(isset($array[$i]['value']) && $array[$i]['value']=='-5') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="-4" @if(isset($array[$i]['value']) && $array[$i]['value']=='-4') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="-3" @if(isset($array[$i]['value']) && $array[$i]['value']=='-3') checked @endif></td>
+      <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="-2" @if(isset($array[$i]['value']) && $array[$i]['value']=='-2') checked @endif></td>
       <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="1" @if(isset($array[$i]['value']) && $array[$i]['value']=='1') checked @endif></td>
       <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="2" @if(isset($array[$i]['value']) && $array[$i]['value']=='2') checked @endif></td>
       <td><input class="form-check-input tengah" type="radio" name="value[{{$i}}]" value="3" @if(isset($array[$i]['value']) && $array[$i]['value']=='3') checked @endif></td>
@@ -73,10 +73,10 @@
       </tr>
     </thead>
     <tbody>
-      @for($i=0; $i<count($array); $i++)
+      @for($i=0; $i<count($array2); $i++)
       <tr>
-        <td>{{$array[$i]['nama']}}</td>
-        <td>Eigen</td>
+        <td>{{$array2[$i]['nama']}}</td>
+        <td>{{$array2[$i]['eigen']}}</td>
       </tr>
       @endfor
     </tbody>

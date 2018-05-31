@@ -132,6 +132,54 @@ class PerhitunganController extends Controller
                 $array[$key]['id'] = $value->id.'-'.$value->id_pilihan;
                 if(isset($tes[$key]->value)) $array[$key]['value'] = $tes[$key]->value;
 
+                // foreach ($tes as $key2 => $value2) {
+                //     $kiri = explode('-',$value2->kiri);
+                //     $kanan = explode('-',$value2->kanan);
+
+                //     if($value->id_pilihan==$kiri[1]){
+                //         if($value2->value < 0){
+                //             $array2[$key][$key2] = 1/(-1 * $value2->value);
+                //         }else{
+                //             $array2[$key][$key2] = $value2->value;
+                //         }
+                //     }elseif($value->id_pilihan==$kanan[1]){
+                //         $balik = -1 * $value2->value;
+
+                //         if($balik < 0){
+                //             $array2[$key][$key2] = 1/(-1 * $balik);
+                //         }else{
+                //             $array2[$key][$key2] = $balik;
+                //         }
+                //     }else $array2[$key][$key2] = 1;
+                // }
+
+                $sumrow = 0;
+                $sumcol = 0;
+
+                foreach ($tes as $key2 => $value2) {
+                    $kiri = explode('-',$value2->kiri);
+                    $kanan = explode('-',$value2->kanan);
+
+                    if($value->id_pilihan==$kiri[1]){
+                        $balik = -1 * $value2->value;
+
+                        if($balik < 0){
+                            $sumrow = $sumrow + (1/(-1 * $balik));
+                        }else{
+                            $sumrow+=$balik;
+                        }
+                    }elseif($value->id_pilihan==$kanan[1]){
+                        if($value2->value < 0){
+                            $sumrow = $sumrow + (1/(-1 * $value2->value));
+                        }else{
+                            $sumrow+=$value2->value;
+                        }
+                    }
+                }
+
+                $sumrow+=1;
+                $array2[$key]['sumrow'] = $sumrow;
+
                 if(substr($value->id_pilihan,0,1) == 'G'){
                     $cek = galangan::find(substr($value->id_pilihan,1,2));
                     $array[$key]['nama'] = $cek->nama;
@@ -146,7 +194,41 @@ class PerhitunganController extends Controller
                     $array2[$key]['nama'] = $cek->kriteria;
                 }
             }
+
+            foreach ($data as $key => $value) {
+                foreach ($tes as $key2 => $value2) {
+                    $kiri = explode('-',$value2->kiri);
+                    $kanan = explode('-',$value2->kanan);
+
+                    if($value->id_pilihan==$kiri[1]){
+                        if($value2->value < 0){
+                            $sumcol = $sumcol + (1/(-1 * $value2->value)) / $array2[$key]['sumrow'];
+                            $array2[$key]['kolom'][] = (1/(-1 * $value2->value));
+                        }else{
+                            $sumcol = $sumcol + ($value2->value / $array2[$key]['sumrow']);
+                            $array2[$key]['kolom'][] = $value2->value;
+                        }
+                    }elseif($value->id_pilihan==$kanan[1]){
+                        $balik = -1 * $value2->value;
+
+                        if($balik < 0){
+                            $sumcol = $sumcol + (1/(-1 * $balik)) / $array2[$key]['sumrow'];
+                            $array2[$key]['kolom'][] = (1/(-1 * $balik));
+                        }else{
+                            $sumcol = $sumcol + ($balik / $array2[$key]['sumrow']);
+                            $array2[$key]['kolom'][] = $balik;
+                        }
+                    }
+                }
+
+                $sumcol = $sumcol + (1/$array2[$key]['sumrow']);
+
+                $array2[$key]['eigen'] = $sumcol / count($data);
+                $array2[$key]['sumcol'] = $sumcol;
+            }
         }
+
+        dd($array2);
 
         $total = 0;
 
@@ -155,7 +237,7 @@ class PerhitunganController extends Controller
             $total+=$cek;
         }
 
-        return view('perhitungan.ajaxform', compact('array','total'));
+        return view('perhitungan.ajaxform', compact('array','total','array2'));
     }
 
     public function simpan(Request $request, $id){
