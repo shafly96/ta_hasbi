@@ -65,7 +65,7 @@
 
 @if(isset($array[0]['value']))
 <div class="col-md-12 border-bottom">
-  <table class="table table-striped" style="text-align:center">
+  <table class="table table-striped" style="margin-top: 50px">
     <thead>
       <tr>
         <td>Nama</td>
@@ -82,4 +82,57 @@
     </tbody>
   </table>
 </div>
+<div class="col-md-12 border-bottom" style="margin-top: 30px">
+  <table>
+    <tr>
+      <td style="width: 200px">Pricipal Eigen Value</td>
+      <td>
+        <?php
+          $max = 0;
+          for($i=0; $i<count($array2); $i++){
+            $max = $max + ($array2[$i]['sumrow']*$array2[$i]['eigen']);
+          }
+          echo $max;
+        ?>
+      </td>
+    </tr>
+    <tr>
+      <td>CI</td>
+      <td>
+        <?php
+          $ci = ($max-count($array2))/(count($array2)-1);
+          echo $ci;
+        ?>
+      </td>
+    </tr>
+    <tr>
+      <td>CR</td>
+      <td>
+        <?php
+          $n = count($array2); 
+          if($n==1 || $n==2) $ri = 0;
+          elseif($n==3) $ri = 0.58;
+          elseif($n==4) $ri = 0.9;
+          elseif($n==5) $ri = 1.12;
+          elseif($n==6) $ri = 1.24;
+          elseif($n==7) $ri = 1.32;
+          elseif($n==8) $ri = 1.41;
+          elseif($n==9) $ri = 1.45;
+          else $ri = 1.49;
+
+          $cr = ($ci/$ri)*100;
+          echo $cr.'%';
+        ?>
+      </td>
+    </tr>
+    <tr>
+      <td>Hasil Konsistensi</td>
+      <?php
+        if($cr <= 10) echo '<td style="color: green"><b>KONSISTEN</b></td>';
+        else echo '<td style="color: red"><b>TIDAK KONSISTEN</b></td>';
+      ?>
+    </tr>
+  </table>
+</div>
+
 @endif

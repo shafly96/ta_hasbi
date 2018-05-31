@@ -47,7 +47,7 @@
         </div>
     </div>
   </div>
-  <div class="row" id="isi_form" style="margin-bottom: 50px;">
+  <div class="row" id="isi_form" style="margin-bottom: 50px">
     
   </div>
 </form>

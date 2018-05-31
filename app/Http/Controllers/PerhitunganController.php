@@ -131,30 +131,31 @@ class PerhitunganController extends Controller
             foreach ($data as $key => $value) {
                 $array[$key]['id'] = $value->id.'-'.$value->id_pilihan;
                 if(isset($tes[$key]->value)) $array[$key]['value'] = $tes[$key]->value;
+                
+                // for($key2 = 0; $key2 < count($tes); $key2++) {
 
-                // foreach ($tes as $key2 => $value2) {
-                //     $kiri = explode('-',$value2->kiri);
-                //     $kanan = explode('-',$value2->kanan);
+                //         $kiri = explode('-',$tes[$key2]->kiri);
+                //         $kanan = explode('-',$tes[$key2]->kanan);
 
-                //     if($value->id_pilihan==$kiri[1]){
-                //         if($value2->value < 0){
-                //             $array2[$key][$key2] = 1/(-1 * $value2->value);
-                //         }else{
-                //             $array2[$key][$key2] = $value2->value;
+                //         if($value->id_pilihan==$kiri[1]){
+                //             if($tes[$key2]->value < 0){
+                //                 $array2[$key][$key2] = 1/(-1 * $tes[$key2]->value);
+                //             }else{
+                //                 $array2[$key][$key2] = $tes[$key2]->value;
+                //             }
+                //         }elseif($value->id_pilihan==$kanan[1]){
+                //             $balik = -1 * $tes[$key2]->value;
+
+                //             if($balik < 0){
+                //                 $array2[$key][$key2] = 1/(-1 * $balik);
+                //             }else{
+                //                 $array2[$key][$key2] = $balik;
+                //             }
                 //         }
-                //     }elseif($value->id_pilihan==$kanan[1]){
-                //         $balik = -1 * $value2->value;
-
-                //         if($balik < 0){
-                //             $array2[$key][$key2] = 1/(-1 * $balik);
-                //         }else{
-                //             $array2[$key][$key2] = $balik;
-                //         }
-                //     }else $array2[$key][$key2] = 1;
+                    
                 // }
 
                 $sumrow = 0;
-                $sumcol = 0;
 
                 foreach ($tes as $key2 => $value2) {
                     $kiri = explode('-',$value2->kiri);
@@ -196,39 +197,45 @@ class PerhitunganController extends Controller
             }
 
             foreach ($data as $key => $value) {
-                foreach ($tes as $key2 => $value2) {
-                    $kiri = explode('-',$value2->kiri);
-                    $kanan = explode('-',$value2->kanan);
+                for ($i=0; $i<count($tes); $i++) {
+                    $kiri = explode('-',$tes[$i]->kiri);
+                    $kanan = explode('-',$tes[$i]->kanan);
 
                     if($value->id_pilihan==$kiri[1]){
-                        if($value2->value < 0){
-                            $sumcol = $sumcol + (1/(-1 * $value2->value)) / $array2[$key]['sumrow'];
-                            $array2[$key]['kolom'][] = (1/(-1 * $value2->value));
+                        if($tes[$i]->value < 0){
+                            $array2[$key]['kolom'][] = (1/(-1 * $tes[$i]->value));
                         }else{
-                            $sumcol = $sumcol + ($value2->value / $array2[$key]['sumrow']);
-                            $array2[$key]['kolom'][] = $value2->value;
+                            $array2[$key]['kolom'][] = $tes[$i]->value;
                         }
                     }elseif($value->id_pilihan==$kanan[1]){
-                        $balik = -1 * $value2->value;
+                        $balik = -1 * $tes[$i]->value;
 
                         if($balik < 0){
-                            $sumcol = $sumcol + (1/(-1 * $balik)) / $array2[$key]['sumrow'];
                             $array2[$key]['kolom'][] = (1/(-1 * $balik));
                         }else{
-                            $sumcol = $sumcol + ($balik / $array2[$key]['sumrow']);
                             $array2[$key]['kolom'][] = $balik;
                         }
                     }
                 }
-
-                $sumcol = $sumcol + (1/$array2[$key]['sumrow']);
-
-                $array2[$key]['eigen'] = $sumcol / count($data);
-                $array2[$key]['sumcol'] = $sumcol;
             }
+            
         }
 
-        dd($array2);
+        foreach ($data as $key => $value) {
+            $index=0;
+            $sumcol=0;
+            for ($i=0; $i<count($array2); $i++) {
+                if($key==$i){
+                    $sumcol = $sumcol + (1/$array2[$i]['sumrow']);
+                    $index=$i;
+                }else{
+                    $sumcol = $sumcol + ($array2[$key]['kolom'][$index]/$array2[$i]['sumrow']);
+                    $index++;
+                }
+            }
+            $array2[$key]['sumcol'] = $sumcol;
+            $array2[$key]['eigen'] = $sumcol/count($data);
+        }
 
         $total = 0;
 
