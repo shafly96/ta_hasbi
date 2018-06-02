@@ -131,29 +131,6 @@ class PerhitunganController extends Controller
             foreach ($data as $key => $value) {
                 $array[$key]['id'] = $value->id.'-'.$value->id_pilihan;
                 if(isset($tes[$key]->value)) $array[$key]['value'] = $tes[$key]->value;
-                
-                // for($key2 = 0; $key2 < count($tes); $key2++) {
-
-                //         $kiri = explode('-',$tes[$key2]->kiri);
-                //         $kanan = explode('-',$tes[$key2]->kanan);
-
-                //         if($value->id_pilihan==$kiri[1]){
-                //             if($tes[$key2]->value < 0){
-                //                 $array2[$key][$key2] = 1/(-1 * $tes[$key2]->value);
-                //             }else{
-                //                 $array2[$key][$key2] = $tes[$key2]->value;
-                //             }
-                //         }elseif($value->id_pilihan==$kanan[1]){
-                //             $balik = -1 * $tes[$key2]->value;
-
-                //             if($balik < 0){
-                //                 $array2[$key][$key2] = 1/(-1 * $balik);
-                //             }else{
-                //                 $array2[$key][$key2] = $balik;
-                //             }
-                //         }
-                    
-                // }
 
                 $sumrow = 0;
 
@@ -218,23 +195,27 @@ class PerhitunganController extends Controller
                     }
                 }
             }
-            
-        }
 
-        foreach ($data as $key => $value) {
-            $index=0;
-            $sumcol=0;
-            for ($i=0; $i<count($array2); $i++) {
-                if($key==$i){
-                    $sumcol = $sumcol + (1/$array2[$i]['sumrow']);
-                    $index=$i;
-                }else{
-                    $sumcol = $sumcol + ($array2[$key]['kolom'][$index]/$array2[$i]['sumrow']);
-                    $index++;
+            foreach ($data as $key => $value) {
+                $index=0;
+                $sumcol=0;
+                for ($i=0; $i<count($array2); $i++) {
+                    if($key==$i){
+                        $sumcol = $sumcol + (1/$array2[$i]['sumrow']);
+                        $index=$i;
+                    }else{
+                        $sumcol = $sumcol + ($array2[$key]['kolom'][$index]/$array2[$i]['sumrow']);
+                        $index++;
+                    }
                 }
+                $array2[$key]['sumcol'] = $sumcol;
+                $array2[$key]['eigen'] = $sumcol/count($data);
             }
-            $array2[$key]['sumcol'] = $sumcol;
-            $array2[$key]['eigen'] = $sumcol/count($data);
+
+            foreach ($tes as $key => $value) {
+                $value->eigen = $array2[$key]['eigen'];
+                $value->save();
+            }
         }
 
         $total = 0;
@@ -265,5 +246,9 @@ class PerhitunganController extends Controller
         }
 
         return redirect()->to('perhitungan/perbandingan/'.$id);
+    }
+
+    public function hasil($id){
+        return view('perhitungan.matriks');
     }
 }

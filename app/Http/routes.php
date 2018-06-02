@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::post('store', 'PerhitunganController@store');
 		Route::get('hapus/{id}', 'PerhitunganController@destroy');
 		Route::get('perbandingan/{id}', 'PerhitunganController@perbandingan');
+		Route::get('hasil/{id}', 'PerhitunganController@hasil');
 		Route::post('generateForm/{id}', 'PerhitunganController@generateForm');
 		Route::post('simpan/{id}', 'PerhitunganController@simpan');
 	});

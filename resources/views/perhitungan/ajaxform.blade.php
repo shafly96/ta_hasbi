@@ -110,7 +110,7 @@
       <td>
         <?php
           $n = count($array2); 
-          if($n==1 || $n==2) $ri = 0;
+          if($n==1 || $n==2){ $ci=0; $ri=1;}
           elseif($n==3) $ri = 0.58;
           elseif($n==4) $ri = 0.9;
           elseif($n==5) $ri = 1.12;

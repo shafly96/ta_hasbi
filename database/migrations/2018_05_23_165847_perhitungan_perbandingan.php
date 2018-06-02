@@ -20,6 +20,7 @@ class PerhitunganPerbandingan extends Migration
             $table->string('kiri');
             $table->string('kanan');
             $table->integer('value');
+            $table->float('eigen')->default(0);
             $table->timestamps();
             
             $table->foreign('id_perhitungan')->references('id')->on('perhitungan')->onDelete('cascade');

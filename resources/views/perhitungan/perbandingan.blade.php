@@ -25,7 +25,6 @@
           <div class="form-group col-md-5">
             <label>Node</label>
             <select class="js-example-basic-multiple" id="node" name="node" style="width:100% !important" onchange="ubah(this.value)">
-              <option value="goal">Goal</option>
                 @for($i=0; $i<count($array); $i++)
                 <?php $cek = explode('-', $array[$i]['id']); if($i>0) $cek2 = explode('-', $array[$i-1]['id']); if($i<count($array)-1) $cek3 = explode('-', $array[$i+1]['id']); ?>
                 @if($i==0) <optgroup label="<?php if(substr($cek[1],0,1)=='G') echo 'Galangan'; else if(substr($cek[1],0,1)=='K') echo 'Kriteria'; else echo 'Sub-Kriteria'; ?>"> @endif
@@ -73,13 +72,6 @@
   function ubah(id){
     var radios = document.getElementsByName('cluster');
     var data = id.split('-');
-
-    if(id=='goal'){
-      radios[0].disabled = true;
-      radios[1].disabled = false;
-      radios[1].checked = true;
-      radios[2].disabled = true;
-    }
 
     if(data[1].substr(0,1)=='K' || data[1].substr(0,1)=='S'){
       radios[0].disabled = false;
