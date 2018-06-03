@@ -2,59 +2,87 @@
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+<style>
+  #table-unweight{
+    overflow-x: scroll;
+    padding-bottom: 20px;
+  }
+
+  #table-unweight table, td{
+    border:1px solid black;
+    text-align: center;
+    font-size: 10px;
+  }
+
+  .vertical-text {
+    transform: rotate(90deg);
+  }
+</style>
 @endsection
 
 @section('content')
-<div class="row" style="margin-top: 50px">
-  <div class="accordion" id="accordionExample">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Unweight
-        </button>
-      </h5>
-    </div>
+<div class="row" style="margin: 50px 0px">
+  <div class="col-md-12">
+    <button class="btn btn-primary" id="unweight">Unweight</button>
+    <button class="btn btn-primary" id="weight">Weight</button>
+  </div>
+  <div class="col-md-12" id="table-unweight" style="padding-top: 30px">
+    <label>Unweight</label>
+    <table>
+      <tr>
+        <td colspan="2" rowspan="2"></td>
+        <td colspan="{{$span['g']}}">Galangan</td>
+        <td colspan="{{$span['k']}}">Kriteria</td>
+        <td colspan="{{$span['s']}}">Sub-Kriteria</td>
+      </tr>
+      <tr>
+        <?php
+          for($i=0;$i<count($nama);$i++){
+            echo '<td style="white-space: nowrap; padding: 0px 8px;">'.$nama[$i].'</td>';
+          }
+        ?>
+      </tr>
+      <?php
+        // dd($unweight);
+        for($i=0; $i<count($nama); $i++){
+          echo '<tr>';
+          if($i==0) echo '<td rowspan="'.$span['g'].'" style="padding: 0px 8px;" class="vertical-text">Galangan</td>';
+          if($i==$span['g']) echo '<td rowspan="'.$span['k'].'" style="padding: 0px 8px;" class="vertical-text">Kriteria</td>';
+          if($i==$span['g']+$span['k']) echo '<td rowspan="'.$span['s'].'" style="white-space: nowrap;"" class="vertical-text">Sub-Kriteria</td>';
+          echo '<td style="padding: 8px 8px;">'.$nama[$i].'</td>';
+          for($j=0; $j<count($nama);$j++){
+            if(isset($unweight[$i+1][$j+1])) echo '<td>'.$unweight[$i+1][$j+1].'</td>';
+            else echo '<td> - </td>';
+          }
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+          echo '</tr>';
+        }
+      ?>
+    </table>
   </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Weight
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  <div class="col-md-12" id="table-weight" style="padding-top: 30px">
+    <label>Weight</label>
   </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Limit
-        </button>
-      </h5>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-</div>
 </div>
 
 @endsection
 
 @push('script')
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+  $("#table-unweight").hide();
+  $("#table-weight").hide();
+
+  $("#unweight").click(function(){
+    $("#table-unweight").show();
+    $("#table-weight").hide();
+
+  });
+
+  $("#weight").click(function(){
+    $("#table-unweight").hide();
+    $("#table-weight").show();
+
+  });
+</script>
 @endpush

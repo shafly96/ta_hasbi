@@ -110,26 +110,35 @@
       <td>
         <?php
           $n = count($array2); 
-          if($n==1 || $n==2){ $ci=0; $ri=1;}
-          elseif($n==3) $ri = 0.58;
+          if($n==3) $ri = 0.58;
           elseif($n==4) $ri = 0.9;
           elseif($n==5) $ri = 1.12;
           elseif($n==6) $ri = 1.24;
           elseif($n==7) $ri = 1.32;
           elseif($n==8) $ri = 1.41;
           elseif($n==9) $ri = 1.45;
-          else $ri = 1.49;
+          elseif($n==10) $ri = 1.49;
+          elseif($n==11) $ri = 1.51;
+          elseif($n==12) $ri = 1.48;
+          elseif($n==13) $ri = 1.56;
+          elseif($n==14) $ri = 1.57;
+          else $ri = 1.59;
 
-          $cr = ($ci/$ri)*100;
-          echo $cr.'%';
+          if($n==1 || $n==2) echo '~';
+          else{
+            $cr = ($ci/$ri);
+            echo $cr.'%';
+          }
         ?>
       </td>
     </tr>
     <tr>
       <td>Hasil Konsistensi</td>
       <?php
-        if($cr <= 10) echo '<td style="color: green"><b>KONSISTEN</b></td>';
-        else echo '<td style="color: red"><b>TIDAK KONSISTEN</b></td>';
+        if($n>2){
+          if($cr < 0.1) echo '<td style="color: green"><b>KONSISTEN</b></td>';
+          else echo '<td style="color: red"><b>TIDAK KONSISTEN</b></td>';
+        }else echo '<td style="color: red"><b>TIDAK KONSISTEN</b></td>';
       ?>
     </tr>
   </table>
