@@ -25,6 +25,7 @@
   <div class="col-md-12">
     <button class="btn btn-primary" id="unweight">Unweight</button>
     <button class="btn btn-primary" id="weight">Weight</button>
+    <button class="btn btn-primary" id="limit">Perangkingan</button>
   </div>
   <div class="col-md-12" id="table-unweight" style="padding-top: 30px">
     <label>Unweight</label>
@@ -52,7 +53,7 @@
           echo '<td style="padding: 8px 8px;">'.$nama[$i].'</td>';
           for($j=0; $j<count($nama);$j++){
             if(isset($unweight[$i+1][$j+1])) echo '<td>'.$unweight[$i+1][$j+1].'</td>';
-            else echo '<td> - </td>';
+            else echo '<td> 0 </td>';
           }
 
           echo '</tr>';
@@ -62,6 +63,39 @@
   </div>
   <div class="col-md-12" id="table-weight" style="padding-top: 30px">
     <label>Weight</label>
+    <table>
+      <tr>
+        <td colspan="2" rowspan="2"></td>
+        <td colspan="{{$span['g']}}">Galangan</td>
+        <td colspan="{{$span['k']}}">Kriteria</td>
+        <td colspan="{{$span['s']}}">Sub-Kriteria</td>
+      </tr>
+      <tr>
+        <?php
+          for($i=0;$i<count($nama);$i++){
+            echo '<td style="white-space: nowrap; padding: 0px 8px;">'.$nama[$i].'</td>';
+          }
+        ?>
+      </tr>
+      <?php
+        for($i=0; $i<count($nama); $i++){
+          echo '<tr>';
+          if($i==0) echo '<td rowspan="'.$span['g'].'" style="padding: 0px 8px;" class="vertical-text">Galangan</td>';
+          if($i==$span['g']) echo '<td rowspan="'.$span['k'].'" style="padding: 0px 8px;" class="vertical-text">Kriteria</td>';
+          if($i==$span['g']+$span['k']) echo '<td rowspan="'.$span['s'].'" style="white-space: nowrap;"" class="vertical-text">Sub-Kriteria</td>';
+          echo '<td style="padding: 8px 8px;">'.$nama[$i].'</td>';
+          for($j=0; $j<count($nama);$j++){
+            if(isset($weight[$i+1][$j+1])) echo '<td>'.$weight[$i+1][$j+1].'</td>';
+            else echo '<td> 0 </td>';
+          }
+
+          echo '</tr>';
+        }
+      ?>
+    </table>
+  </div>
+  <div class="col-md-12" id="table-limit" style="padding-top: 30px">
+    <label>Perangkingan</label>
   </div>
 </div>
 
@@ -72,17 +106,24 @@
 <script>
   $("#table-unweight").hide();
   $("#table-weight").hide();
+  $("#table-limit").hide();
 
   $("#unweight").click(function(){
     $("#table-unweight").show();
     $("#table-weight").hide();
-
+    $("#table-limit").hide();
   });
 
   $("#weight").click(function(){
     $("#table-unweight").hide();
     $("#table-weight").show();
+    $("#table-limit").hide();
+  });
 
+  $("#limit").click(function(){
+    $("#table-unweight").hide();
+    $("#table-weight").hide();
+    $("#table-limit").show();
   });
 </script>
 @endpush

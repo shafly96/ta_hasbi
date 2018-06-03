@@ -118,7 +118,7 @@
         data: null, 
         searchable: false,
         render: function(data) {
-          return '<a href="{{url('')}}/perhitungan/perbandingan/'+data.id+'" class="btn btn-warning btn-sm" role="button"><b>perbandingan</b></a><a href="{{url('')}}/perhitungan/hasil/'+data.id+'" class="btn btn-success btn-sm" role="button" style="margin-left: 8px"><b>matriks</b></a><a href="{{url('')}}/perhitungan/hapus/'+data.id+'" class="btn btn-danger btn-sm" style="margin-left: 8px" role="button"><i class="fas fa-trash"></i></a>';
+          return '<a href="{{url('')}}/perhitungan/perbandingan/'+data.id+'" class="btn btn-warning btn-sm" role="button"><b>pairwise elemen</b></a><a href="{{url('')}}/perhitungan/cluster/'+data.id+'" class="btn btn-warning btn-sm" style="margin-left: 8px" role="button"><b>pairwise cluster</b></a><a href="{{url('')}}/perhitungan/hasil/'+data.id+'" class="btn btn-success btn-sm" role="button" style="margin-left: 8px"><b>matriks</b></a><a href="{{url('')}}/perhitungan/hapus/'+data.id+'" class="btn btn-danger btn-sm" style="margin-left: 8px" role="button"><i class="fas fa-trash"></i></a>';
         } 
       }
       ]

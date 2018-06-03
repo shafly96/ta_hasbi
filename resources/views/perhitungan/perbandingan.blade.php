@@ -64,20 +64,26 @@
   window.onload=function(){
     var radios = document.getElementsByName('cluster');
 
-    radios[0].disabled = true
+    radios[0].disabled = true;
     radios[1].checked = true;
-    radios[2].disabled = true
   }
 
   function ubah(id){
     var radios = document.getElementsByName('cluster');
     var data = id.split('-');
 
-    if(data[1].substr(0,1)=='K' || data[1].substr(0,1)=='S'){
+    if(data[1].substr(0,1)=='S'){
       radios[0].disabled = false;
       radios[0].checked = true;
       radios[1].disabled = true;
       radios[2].disabled = true;
+    }
+
+    if(data[1].substr(0,1)=='K'){
+      radios[0].disabled = false;
+      radios[0].checked = true;
+      radios[1].disabled = true;
+      radios[2].disabled = false;
     }
 
     if(data[1].substr(0,1)=='G'){
