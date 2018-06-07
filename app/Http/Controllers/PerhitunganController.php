@@ -473,7 +473,7 @@ class PerhitunganController extends Controller
             }
         }
 
-        dd($urutan);
+        // dd($urutan);
         
 
         return view('perhitungan.matriks', compact('nama','span','unweight','weight'));
